@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EDUdz - محاضرة مباشرة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
+  <script type="module" src="./firebase-config.js"></script>
+  <script type="module" src="./auth.js"></script>
+
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #eef2f3;
+      margin: 0; padding: 0;
+    }
+    header {
+      background: #3498db;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 500px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button.join {
+      background-color: #9b59b6;
+    }
+    #meet {
+      margin: 30px auto;
+      width: 95%;
+      height: 600px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header>EDUdz - دخول المحاضرة بالفيديو</header>
+
+  <div class="container">
+    <h3 style="text-align:center;">تسجيل المستخدم</h3>
+    <input type="text" id="first-name" placeholder="الاسم">
+    <input type="text" id="last-name" placeholder="اللقب">
+    <input type="email" id="auth-email" placeholder="البريد الإلكتروني">
+    <input type="password" id="auth-password" placeholder="كلمة المرور">
+    <button onclick="register()">تسجيل جديد</button>
+    <button onclick="login()">تسجيل الدخول</button>
+    <button onclick="logout()">تسجيل الخروج</button>
+    <button class="join" onclick="startMeeting()">انضم إلى المحاضرة</button>
+  </div>
+
+  <div id="meet"></div>
+
+  <script src='https://meet.jit.si/external_api.js'></script>
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="auth.js"></script>
+  <script>
+    function startMeeting() {
+      const container = document.getElementById("meet");
+      container.style.display = "block";
+
+      const domain = "meet.jit.si";
+      const options = {
+        roomName: "EDUdzRoom123",
+        parentNode: container,
+        userInfo: {
+          displayName: document.getElementById("first-name").value + " " + document.getElementById("last-name").value
+        }
+      };
+      const api = new JitsiMeetExternalAPI(domain, options);
+    }
+  </script>
+</body>
+</html>
